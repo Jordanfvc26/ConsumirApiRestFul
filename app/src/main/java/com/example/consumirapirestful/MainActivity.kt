@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
 
     fun cosumirApi(view: View) {
         val respuestaObtenida = findViewById<TextView>(R.id.txtRespuestaJSON);
-        //val respuesta:String;
         //Línea que nos permitirá hacer scroll para poder ver todos los registros que traemos de la API
         respuestaObtenida.movementMethod = ScrollingMovementMethod();
 
@@ -32,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         val stringRequest = JsonObjectRequest(
             Request.Method.GET, "https://gorest.co.in/public/v1/users", null,
             { response ->
+                //Parseo de los datos para que se puedan leer de mejor manera
                 var listaUsers = "";
                 val listaUsersJSON = JSONArray(response.getString("data"));
                 for(i in 0 until listaUsersJSON.length()){
@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
                 respuestaObtenida.text=listaUsers;
             },
             {
+                //Mensaje de error si no se pudo consumir la API
                 respuestaObtenida.text="Ha ocurrido un error inesperado\n y no se pudo consumir la API :(";
             })
         queue.add(stringRequest)
